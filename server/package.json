@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "format": "prettier --single-quote --check .",
-    "prepare": "cd ../ && husky install server/.husky"
+    "prepare": "cd ../ && husky install server/.husky",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -31,7 +32,6 @@
     "*.js": [
       "prettier --single-quote --write",
       "eslint --fix"
-    ],
-    "**/*": "prettier --write --ignore-unknown"
+    ]
   }
 }
