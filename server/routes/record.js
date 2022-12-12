@@ -39,4 +39,19 @@ recordRoutes.route('/pagelist').get(async function (_req, res) {
     });
 });
 
+recordRoutes.route('/pagelist/:id').get((req, res) => {
+  const dbConnect = dbo.getDb();
+  const listingQuery = {path : {$regex : req.params.id}};
+
+  dbConnect
+    .collection('pages')
+    .find(listingQuery).toArray(function (err, result) {
+      if (err) {
+        res.status(400).send('Error fetching listings!');
+      } else {
+        res.json(result);
+      }
+    });
+});
+
 module.exports = recordRoutes;
