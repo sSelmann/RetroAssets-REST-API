@@ -56,10 +56,25 @@ recordRoutes.route('/pagelist/:page').get((req, res) => {
 
 recordRoutes.route('/subpagelist/:subpage').get((req, res) => {
   const dbConnect = dbo.getDb();
-  const listingQuery = {path : {$regex : req.params.subpage}};
+  const listingQuery = {path : {$regex : "/"+req.params.subpage+"/"}};
 
   dbConnect
     .collection('subpages')
+    .find(listingQuery).toArray(function (err, result) {
+      if (err) {
+        res.status(400).send('Error fetching listings!');
+      } else {
+        res.json(result);
+      }
+    });
+});
+
+recordRoutes.route('/subpagel2list/:subpagel2').get((req, res) => {
+  const dbConnect = dbo.getDb();
+  const listingQuery = {path : {$regex : "/"+req.params.subpagel2+"/"}};
+
+  dbConnect
+    .collection('subpages2')
     .find(listingQuery).toArray(function (err, result) {
       if (err) {
         res.status(400).send('Error fetching listings!');
