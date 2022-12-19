@@ -84,4 +84,35 @@ recordRoutes.route('/subpagel2list/:subpagel2').get((req, res) => {
     });
 });
 
+recordRoutes.route('/subpagel3list/:subpagel3').get((req, res) => {
+  const dbConnect = dbo.getDb();
+  const listingQuery = {path : {$regex : "/"+req.params.subpagel3+"/"}};
+
+  dbConnect
+    .collection('subpages3')
+    .find(listingQuery).toArray(function (err, result) {
+      if (err) {
+        res.status(400).send('Error fetching listings!');
+      } else {
+        res.json(result);
+      }
+    });
+});
+
+
+recordRoutes.route('/search/:value').get((req, res) => {
+  const dbConnect = dbo.getDb();
+  const listingQuery = {name : {$regex : req.params.value, $options: "i"}};
+
+  dbConnect
+    .collection('subpages')
+    .find(listingQuery).toArray(function (err, result) {
+      if (err) {
+        res.status(400).send('Error fetching listings!');
+      } else {
+        res.json(result);
+      }
+    });
+});
+
 module.exports = recordRoutes;
